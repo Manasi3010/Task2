@@ -1,0 +1,24 @@
+.card{
+    border: 2px solid #e7e7e7;
+ 
+    border-radius: 4px;
+     
+    padding: .5rem;
+ }
+ card-content{
+    text-align: center;
+ }
+mat-label {display: block;}
+mat-label span {display: inline-block;width: 100px;} 
+mat-label h4 {display: inline-block; color: black;}
+
+.icon{
+    font-size: 40px;
+    width: 70px;
+    height: 50px;
+    align-items: center !IMPORTANT;
+    display: flex !IMPORTANT;
+    margin-left: 240px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

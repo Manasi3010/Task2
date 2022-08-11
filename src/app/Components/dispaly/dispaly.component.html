@@ -1,0 +1,47 @@
+<!-- <div>
+  <mat-card class="card">
+    <mat-card-title style="text-align: center">Employee Details</mat-card-title>
+    <mat-card-content>
+      <div *ngFor="let emp of empdetails.employees">
+        <mat-label
+          ><span>Name</span>
+          <h4>:{{ emp.firstName }} {{ emp.lastName }}</h4>
+        </mat-label>
+        <mat-label
+          ><span>Email</span>
+          <h4>:{{ emp.email }}</h4>
+        </mat-label>
+        <mat-label
+          ><span>State</span>
+          <h4>:{{ emp.State }}</h4></mat-label
+        >
+        <mat-label
+          ><span>City</span>
+          <h4>:{{ emp.city }}</h4>
+        </mat-label>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> -->
+<!-- <pre>{{ empdetails | json }}</pre> -->
+<div>
+  <h3 style="text-align: center">Employee Details</h3>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>State</th>
+        <th>City</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of empdetails.employees">
+        <td>{{ emp.firstName }} {{ emp.lastName }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.State }}</td>
+        <td>{{ emp.city }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
