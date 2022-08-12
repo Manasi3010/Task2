@@ -1,180 +1,128 @@
-<!-- <div>
+<div>
   <div>
-    <form [formGroup]="empForm" (ngSubmit)="onSubmit()">
-      <div formArrayName="employees">
-        <div
-          *ngFor="let employee of employees().controls; let empIndex = index"
-        >
-          <mat-label>FirstName </mat-label>
-          <mat-form-field>
-            <input
-              matInput
-              formControlName="firstName"
-              placeholder="FirstName"
-            />
-            <mat-error>
-              <div
-                *ngIf="employee.get('firstName')?.errors?.['required']"
-                class="warn"
-              >
-                firstName is mandatory.
-              </div>
-              <div
-                *ngIf="
-                    employee.get('firstName')?.errors?.['minlength'] 
-                  "
-                class="warn"
-              >
-                firstName be atleast
-                {{
-                      employee.get("shopName")?.errors?.['minlength'].requiredLength
-                }}
-                characters.
-              </div>
-            </mat-error>
-          </mat-form-field>
-          <mat-label>lastName </mat-label>
-          <mat-form-field>
-            <input matInput formControlName="lastName" placeholder="lastName" />
-            <mat-error>
-              <div
-                *ngIf="employee.get('lastName')?.errors?.['required']"
-                class="warn"
-              >
-                lastName is mandatory.
-              </div>
-              <div
-                *ngIf="
-                    employee.get('lastName')?.errors?.['minlength'] 
-                  "
-                class="warn"
-              >
-                lastName must be atleast
-                {{
-                      employee.get("lastName")?.errors?.['minlength'].requiredLength
-                }}
-                characters.
-              </div>
-            </mat-error>
-          </mat-form-field>
-
-          <label>Email:</label>
-          <input type="email" formControlName="email" />
-          <div *ngIf="employee.get('email')?.errors?.['touched']" class="warn">
-            Required
-          </div>
-          <div *ngIf="employee.get('email')?.errors?.['pattern']" class="warn">
-            Enter valid email
-          </div>
-
-          <label>State:</label>
-          <select
-            formControlName="State"
-            (change)="onSelect($event.target.value)"
-          >
-            <option *ngFor="let st of states[99].states">
-              {{ st.name }}
-            </option>
-          </select>
-          <div *ngIf="employee.get('State')?.errors?.['required']" class="warn">
-            Select the State
-          </div>
-          <label>city:</label>
-          <select formControlName="city">
-            <option *ngFor="let ci of city | valueArray">
-              {{ ci }}
-            </option>
-          </select>
-          <div *ngIf="employee.get('city')?.errors?.['required']" class="warn">
-            Select the City
-          </div>
-
-          <button type="submit" [disabled]="!empForm.valid">Submit</button>
-          <button (click)="removeEmployee(empIndex)">Remove</button>
-        </div>
-      </div>
-    </form>
-
-    <p>
-      <button type="button" (click)="addEmployee()">Add Employee</button>
-    </p>
-  </div>
-<pre>{{ states | json }}</pre> -->
-<!-- </div> -->
-<!-- <form [formGroup]="empForm" (ngSubmit)="onSubmit()" class="form-container">
-  <div formArrayName="employees">
-    <div *ngFor="let employee of employees().controls; let empIndex = index">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title> Employee Information </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="row">
-            <div class="col-md-6">
-              <mat-form-field class="full-width">
-                <input
-                  formControlName="firstName"
-                  matInput
-                  placeholder="First name"
-                />
-              </mat-form-field>
-            </div>
-            <div class="col-md-6">
-              <mat-form-field class="full-width">
-                <input
-                  formControlName="lastName"
-                  matInput
-                  placeholder="Last name"
-                />
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <mat-form-field class="full-width">
-                <input
-                  formControlName="email"
-                  matInput
-                  placeholder="Address"
-                ></textarea>
-              </mat-form-field>
-            </div>
-            <div class="col-md-6 top-padding">
-              <mat-form-field class="full-width" appearance="fill">
-                <mat-label>Select State</mat-label>
-                <input formControlName="State" matInput />
-                <mat-select
-                  formControlName="State"
-                  (change)="onSelect($event.target.value)"
+    <mat-card style="height: 300px; width: 600px">
+      <form [formGroup]="empForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-4">
+            <mat-form-field appearance="legacy">
+              <mat-label>FirstName </mat-label>
+              <input matInput formControlName="firstName" />
+              <mat-error>
+                <div
+                  *ngIf="empForm.get('firstName')?.errors?.['required']"
+                  class="warn"
                 >
-                  <mat-option *ngFor="let st of states[99].states">
-                    {{ st.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+                  firstName is mandatory.
+                </div>
+                <div
+                  *ngIf="
+                empForm.get('firstName')?.errors?.['minlength'] 
+                    "
+                  class="warn"
+                >
+                  firstName be atleast
+                  {{
+                  empForm.get("firstName")?.errors?.['minlength'].requiredLength
+                  }}
+                  characters.
+                </div>
+              </mat-error>
+            </mat-form-field>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <mat-radio-group
-                [ngClass]="{
-                  invalid: ngForm.submitted && profileForm.get('gender').invalid
-                }"
-                formControlName="gender"
-                class="margin-left"
+          <div class="col-4">
+            <mat-form-field>
+              <mat-label>lastName </mat-label>
+              <input
+                matInput
+                formControlName="lastName"
+                placeholder="lastName"
+              />
+              <mat-error>
+                <div
+                  *ngIf="empForm.get('lastName')?.errors?.['required']"
+                  class="warn"
+                >
+                  lastName is mandatory.
+                </div>
+                <div
+                  *ngIf="
+                empForm.get('lastName')?.errors?.['minlength'] 
+                    "
+                  class="warn"
+                >
+                  lastName must be atleast
+                  {{
+                  empForm.get("lastName")?.errors?.['minlength'].requiredLength
+                  }}
+                  characters.
+                </div>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-4">
+            <mat-form-field>
+              <mat-label>Email:</mat-label>
+              <input matInput formControlName="email" />
+              <div
+                *ngIf="empForm.get('email')?.errors?.['touched']"
+                class="warn"
               >
-                <mat-radio-button value="male"> Male </mat-radio-button>
-                <mat-radio-button value="female"> Female </mat-radio-button>
-              </mat-radio-group>
-            </div>
+                Required
+              </div>
+              <div
+                *ngIf="empForm.get('email')?.errors?.['pattern']"
+                class="warn"
+              >
+                Enter valid email
+              </div>
+            </mat-form-field>
           </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button (click)="saveForm()" mat-raised-button color="primary">
-            Save
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <mat-form-field>
+              <mat-label>State:</mat-label>
+              <mat-select
+                formControlName="State"
+                (selectionChange)="onSelect($event.value)"
+              >
+                <mat-option
+                  *ngFor="let st of states[99].states"
+                  [value]="st.name"
+                >
+                  {{ st.name }}
+                </mat-option>
+                <div
+                  *ngIf="empForm.get('State')?.errors?.['required']"
+                  class="warn"
+                >
+                  Select the State
+                </div>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-4">
+            <mat-form-field>
+              <mat-label>city:</mat-label>
+              <mat-select formControlName="city">
+                <mat-option *ngFor="let ci of city | valueArray" [value]="ci">
+                  {{ ci }}
+                </mat-option>
+              </mat-select>
+              <div
+                *ngIf="empForm.get('city')?.errors?.['required']"
+                class="warn"
+              >
+                Select the City
+              </div>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <button mat-raised-button type="submit">Submit</button>
+      </form>
+    </mat-card>
   </div>
-</form> -->
+  <!-- <pre>{{ states | json }}</pre> -->
+</div>

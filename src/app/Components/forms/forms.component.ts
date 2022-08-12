@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Router } from '@angular/router';
 import { CountrystateService } from 'src/app/service/countrystate.service';
 
@@ -17,19 +18,36 @@ export interface State {
 export class FormsComponent implements OnInit {
   selectedEmp = 0;
   empForm: FormGroup;
-  states: State;
+  states: any;
   city: Array<JSON>;
   constructor(
     private fb: FormBuilder,
+
     private data: CountrystateService,
     private route: Router
   ) {}
 
   ngOnInit() {
     this.empForm = this.fb.group({
-      employees: this.fb.array([]),
+      firstName: [
+        '',
+        [Validators.required, Validators.minLength(5), Validators.maxLength(8)],
+      ],
+      lastName: [
+        '',
+        [Validators.required, Validators.minLength(5), Validators.maxLength(8)],
+      ],
+      State: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ],
+      ],
     });
-    this.data.getState().subscribe((st: any) => {
+    this.data.getState().subscribe((st) => {
       this.states = st;
     });
   }
@@ -62,7 +80,7 @@ export class FormsComponent implements OnInit {
 
   addEmployee() {
     // console.log('Adding a employee');
-    this.employees().push(this.newEmployee());
+    return this.employees().push(this.newEmployee());
   }
 
   removeEmployee(empIndex: number) {
@@ -75,6 +93,7 @@ export class FormsComponent implements OnInit {
     });
   }
   onSelect(val: string) {
+    console.log(val);
     this.data.getCity(val).subscribe((res: any) => {
       this.city = res;
       // console.log(this.city);
