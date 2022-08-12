@@ -1,3 +1,9 @@
 .warn{
   color: red;
 }
+.col-4{
+  margin: 10px;
+}
+mat-label{
+  color: black;
+}

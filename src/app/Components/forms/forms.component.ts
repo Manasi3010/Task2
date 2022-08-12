@@ -10,16 +10,24 @@ export interface State {
   iso2: string;
   state: Array<JSON>;
 }
+export interface State {
+  firstname: string;
+  lastname: string;
+  email: string;
+  State: string;
+  city: string;
+}
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.css'],
 })
 export class FormsComponent implements OnInit {
-  selectedEmp = 0;
   empForm: FormGroup;
   states: any;
   city: Array<JSON>;
+  empdata: any = [];
+  ydata: any;
   constructor(
     private fb: FormBuilder,
 
@@ -28,6 +36,8 @@ export class FormsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.ydata = localStorage.getItem('key');
+    this.empdata = JSON.parse(this.ydata);
     this.empForm = this.fb.group({
       firstName: [
         '',
@@ -87,10 +97,20 @@ export class FormsComponent implements OnInit {
     this.employees().removeAt(empIndex);
   }
   onSubmit() {
+    console.log('hi');
+
     let empdata = this.empForm.value;
     this.route.navigate(['/display'], {
       queryParams: { data: JSON.stringify(empdata) },
     });
+
+    const idata = {
+      firstname: this.empForm.value.firstName,
+      lastname: this.empForm.value.lastName,
+      email: this.empForm.value.email,
+      state: this.empForm.value.State,
+      city: this.empForm.value.city,
+    };
   }
   onSelect(val: string) {
     console.log(val);
