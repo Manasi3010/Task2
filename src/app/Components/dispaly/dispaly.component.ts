@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,7 +11,7 @@ import { CountrystateService } from 'src/app/service/countrystate.service';
   templateUrl: './dispaly.component.html',
   styleUrls: ['./dispaly.component.css'],
 })
-export class DispalyComponent implements OnInit {
+export class DispalyComponent implements OnInit, AfterViewInit {
   empdetails: any;
   Allemp: any = [];
   searchKey = '';
@@ -26,11 +26,6 @@ export class DispalyComponent implements OnInit {
   filterSelectObj: any = [];
   constructor(private emp: CountrystateService) {
     this.filterSelectObj = [
-      {
-        name: 'name',
-        columnProp: 'firstName',
-        options: [],
-      },
       {
         name: 'email',
         columnProp: 'email',
@@ -56,17 +51,24 @@ export class DispalyComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.obs = this.dataSource.connect();
-      this.dataSource.filterPredicate = this.createFilter();
+
       this.filterSelectObj.filter((o: any) => {
         o.options = this.getFilterObject(this.Allemp, o.columnProp);
       });
     });
   }
+
+  ngAfterViewInit(): void {
+    this.dataSource.filterPredicate = this.createFilter();
+  }
   filterChange(filter: any, event: any) {
-    //let filterValues = {}
     this.filterValues[filter.columnProp] = event.target.value
       .trim()
       .toLowerCase();
+    this.filterValues['firstName'] =
+      this.filterValues['firstName'] && this.filterValues['firstName'] !== ''
+        ? this.filterValues['firstName']
+        : '';
     this.dataSource.filter = JSON.stringify(this.filterValues);
   }
   getFilterObject(fullObj: any, key: any) {
@@ -82,7 +84,12 @@ export class DispalyComponent implements OnInit {
 
   createFilter() {
     let filterFunction = function (data: any, filter: string): boolean {
-      let searchTerms = JSON.parse(filter);
+      let searchTerms: any;
+      try {
+        searchTerms = JSON.parse(filter);
+      } catch (error) {
+        searchTerms = filter;
+      }
       let isFilterSet = false;
       for (const col in searchTerms) {
         if (searchTerms[col].toString() !== '') {
@@ -116,6 +123,14 @@ export class DispalyComponent implements OnInit {
       return nameSearch();
     };
     return filterFunction;
+  }
+  applyFilter(event: any) {
+    if (this.searchKey == '') {
+      this.ngOnInit();
+    } else {
+      this.filterValues['firstName'] = event.target.value.toLowerCase();
+      this.dataSource.filter = JSON.stringify(this.filterValues);
+    }
   }
 
   // Reset table filters

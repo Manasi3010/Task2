@@ -1,8 +1,16 @@
 <div>
   <button mat-raised-button routerLink="/home">Add Another</button>
 </div>
-<div>
-  <mat-form-field *ngFor="let filter of filterSelectObj" class="example-header">
+<div class="example-header">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Seacher Here ..."
+      (keyup)="applyFilter($event)"
+      [(ngModel)]="searchKey"
+    />
+  </mat-form-field>
+  <mat-form-field *ngFor="let filter of filterSelectObj">
     <mat-label>Filter {{ filter.name }}</mat-label>
     <select
       matNativeControl
