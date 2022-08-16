@@ -18,12 +18,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { SearchbynamePipe } from './Pipes/searchbyname.pipe';
 @NgModule({
   declarations: [
     AppComponent,
     FormsComponent,
     ValueArrayPipe,
     DispalyComponent,
+    SearchbynamePipe,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

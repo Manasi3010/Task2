@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
-import { FormsComponent } from '../forms/forms.component';
+import { Observable } from 'rxjs';
+
+import { CountrystateService } from 'src/app/service/countrystate.service';
 
 @Component({
   selector: 'app-dispaly',
@@ -13,29 +14,116 @@ import { FormsComponent } from '../forms/forms.component';
 export class DispalyComponent implements OnInit {
   empdetails: any;
   Allemp: any = [];
+  searchKey = '';
+  dataSource1: MatTableDataSource<any> = new MatTableDataSource();
+  obs!: Observable<any>;
+  filterValues: any = {};
   dataSource = new MatTableDataSource();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['Name', 'Email', 'State', 'City'];
-  constructor(private route: ActivatedRoute, private dialog: MatDialog) {}
-  data: any;
-  iFdata: any;
-  ngOnInit(): void {
-    if (localStorage.getItem('Fdata')) {
-      this.iFdata = localStorage.getItem('Fdata');
-      this.Allemp = JSON.parse(this.iFdata);
-      console.log(this.Allemp);
-    }
+  displayedColumns: string[] = ['firstName', 'email', 'State', 'city'];
+  filterSelectObj: any = [];
+  constructor(private emp: CountrystateService) {
+    this.filterSelectObj = [
+      {
+        name: 'name',
+        columnProp: 'firstName',
+        options: [],
+      },
+      {
+        name: 'email',
+        columnProp: 'email',
+        options: [],
+      },
+      {
+        name: 'State',
+        columnProp: 'State',
+        options: [],
+      },
+      {
+        name: 'City',
+        columnProp: 'city',
+        options: [],
+      },
+    ];
+  }
 
-    this.route.queryParams.subscribe((params: any) => {
-      this.empdetails = JSON.parse(params.data);
-      console.log(this.empdetails);
-
-      this.Allemp.push(this.empdetails);
-      console.log(this.Allemp);
-      const idata = JSON.stringify(this.Allemp);
-      localStorage.setItem('Fdata', idata);
+  ngOnInit() {
+    this.emp.getEmployee().subscribe((data: any) => {
+      this.Allemp = data;
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.obs = this.dataSource.connect();
+      this.dataSource.filterPredicate = this.createFilter();
+      this.filterSelectObj.filter((o: any) => {
+        o.options = this.getFilterObject(this.Allemp, o.columnProp);
+      });
     });
-    this.dataSource = this.Allemp;
-    // console.log(this.dataSource);
+  }
+  filterChange(filter: any, event: any) {
+    //let filterValues = {}
+    this.filterValues[filter.columnProp] = event.target.value
+      .trim()
+      .toLowerCase();
+    this.dataSource.filter = JSON.stringify(this.filterValues);
+  }
+  getFilterObject(fullObj: any, key: any) {
+    const uniqChk: any[] = [];
+    fullObj.filter((obj: any) => {
+      if (!uniqChk.includes(obj[key])) {
+        uniqChk.push(obj[key]);
+      }
+      return obj;
+    });
+    return uniqChk;
+  }
+
+  createFilter() {
+    let filterFunction = function (data: any, filter: string): boolean {
+      let searchTerms = JSON.parse(filter);
+      let isFilterSet = false;
+      for (const col in searchTerms) {
+        if (searchTerms[col].toString() !== '') {
+          isFilterSet = true;
+        } else {
+          delete searchTerms[col];
+        }
+      }
+      let nameSearch = () => {
+        let found = false;
+        if (isFilterSet) {
+          for (const col in searchTerms) {
+            searchTerms[col]
+              .trim()
+              .toLowerCase()
+              .split(' ')
+              .forEach((word: any) => {
+                if (
+                  data[col].toString().toLowerCase().indexOf(word) != -1 &&
+                  isFilterSet
+                ) {
+                  found = true;
+                }
+              });
+          }
+          return found;
+        } else {
+          return true;
+        }
+      };
+      return nameSearch();
+    };
+    return filterFunction;
+  }
+
+  // Reset table filters
+  resetFilters() {
+    this.filterValues = {};
+    this.filterSelectObj.forEach((value: any, key: any) => {
+      value.modelValue = undefined;
+    });
+    this.dataSource.filter = '';
   }
 }

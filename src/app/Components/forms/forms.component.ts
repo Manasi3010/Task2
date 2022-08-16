@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -32,7 +33,8 @@ export class FormsComponent implements OnInit {
     private fb: FormBuilder,
 
     private data: CountrystateService,
-    private route: Router
+    private route: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -66,57 +68,16 @@ export class FormsComponent implements OnInit {
     return this.empForm.get('employees') as FormArray;
   }
 
-  newEmployee(): FormGroup {
-    return this.fb.group({
-      firstName: [
-        '',
-        [Validators.required, Validators.minLength(5), Validators.maxLength(8)],
-      ],
-      lastName: [
-        '',
-        [Validators.required, Validators.minLength(5), Validators.maxLength(8)],
-      ],
-      State: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        ],
-      ],
-    });
-  }
-
-  addEmployee() {
-    // console.log('Adding a employee');
-    return this.employees().push(this.newEmployee());
-  }
-
-  removeEmployee(empIndex: number) {
-    this.employees().removeAt(empIndex);
-  }
   onSubmit() {
-    console.log('hi');
-
-    let empdata = this.empForm.value;
-    this.route.navigate(['/display'], {
-      queryParams: { data: JSON.stringify(empdata) },
-    });
-
-    const idata = {
-      firstname: this.empForm.value.firstName,
-      lastname: this.empForm.value.lastName,
-      email: this.empForm.value.email,
-      state: this.empForm.value.State,
-      city: this.empForm.value.city,
-    };
+    this.http
+      .post<any>('http://localhost:3000/employee', this.empForm.value)
+      .subscribe((res) => {});
+    this.route.navigate(['/display']);
   }
   onSelect(val: string) {
     console.log(val);
     this.data.getCity(val).subscribe((res: any) => {
       this.city = res;
-      // console.log(this.city);
     });
   }
 }

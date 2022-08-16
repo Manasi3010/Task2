@@ -1,0 +1,68 @@
+{
+  "employee": [
+    {
+      "firstName": "Rajjjjj",
+      "lastName": "Jabre",
+      "State": "Assam",
+      "city": "Barpathār",
+      "email": "raj@gmail.com",
+      "id": 1
+    },
+    {
+      "firstName": "manasi",
+      "lastName": "Upade",
+      "State": "Bihar",
+      "city": "Barhiya",
+      "email": "manasi@gmail.com",
+      "id": 2
+    },
+    {
+      "firstName": "Mayuri",
+      "lastName": "Upade",
+      "State": "West Bengal",
+      "city": "Āmlāgora",
+      "email": "mayu@gmail.com",
+      "id": 3
+    },
+    {
+      "firstName": "Aaman",
+      "lastName": "Upade",
+      "State": "Goa",
+      "city": "Dicholi",
+      "email": "aman@gmail.com",
+      "id": 4
+    },
+    {
+      "firstName": "Priyanka",
+      "lastName": "Moree",
+      "State": "Telangana",
+      "city": "Dasnapur",
+      "email": "pri@gmail.com",
+      "id": 5
+    },
+    {
+      "firstName": "ashwini",
+      "lastName": "gavnkar",
+      "State": "Jharkhand",
+      "city": "Chatrā",
+      "email": "ash@gmail.com",
+      "id": 6
+    },
+    {
+      "firstName": "sakshi",
+      "lastName": "naike",
+      "State": "Punjab",
+      "city": "Ajitgarh",
+      "email": "ssks@gmail.com",
+      "id": 7
+    },
+    {
+      "firstName": "Nimeesh",
+      "lastName": "Narurkar",
+      "State": "Maharashtra",
+      "city": "Mumbai",
+      "email": "nimeesh@gmail.com",
+      "id": 8
+    }
+  ]
+}

@@ -22,3 +22,8 @@ mat-label h4 {display: inline-block; color: black;}
     margin-bottom: 10px;
     margin-top: 10px;
 }
+.example-header{
+    margin-left: 15px;
+   
+    /* margin: 10px; */
+}
