@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { SearchbynamePipe } from './Pipes/searchbyname.pipe';
+import { CommanTableComponent } from './Components/comman-table/comman-table.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SearchbynamePipe } from './Pipes/searchbyname.pipe';
     ValueArrayPipe,
     DispalyComponent,
     SearchbynamePipe,
+    CommanTableComponent,
   ],
   imports: [
     BrowserModule,

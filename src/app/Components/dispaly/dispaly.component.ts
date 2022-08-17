@@ -15,7 +15,7 @@ export class DispalyComponent implements OnInit, AfterViewInit {
   empdetails: any;
   Allemp: any = [];
   searchKey = '';
-  dataSource1: MatTableDataSource<any> = new MatTableDataSource();
+
   obs!: Observable<any>;
   filterValues: any = {};
   dataSource = new MatTableDataSource();

@@ -87,14 +87,6 @@
       "city": "Cortalim",
       "email": "abc@gmail.com",
       "id": 11
-    },
-    {
-      "firstName": "Himanshu",
-      "lastName": "Gohil",
-      "State": "Gujarat",
-      "city": "Surat",
-      "email": "himashu@gmail.com",
-      "id": 12
     }
   ]
 }

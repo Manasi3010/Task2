@@ -88,10 +88,7 @@
                   formControlName="State"
                   (selectionChange)="onSelect($event.value)"
                 >
-                  <mat-option
-                    *ngFor="let st of states[99].states"
-                    [value]="st.name"
-                  >
+                  <mat-option *ngFor="let st of states" [value]="st.name">
                     {{ st.name }}
                   </mat-option>
                   <div

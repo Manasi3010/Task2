@@ -14,7 +14,7 @@ export class CountrystateService {
       .pipe(
         map((state: any) => {
           return {
-            ...state.data,
+            ...state.data[99],
           };
         })
       );
@@ -30,6 +30,21 @@ export class CountrystateService {
         map((city: any) => {
           return {
             ...city.data,
+          };
+        })
+      );
+  }
+
+  getcity() {
+    return this.http
+      .post('https://countriesnow.space/api/v0.1/countries/state/cities', {
+        state: 'Uttarakhand',
+        country: 'India',
+      })
+      .pipe(
+        map((city: any) => {
+          return {
+            ...city,
           };
         })
       );

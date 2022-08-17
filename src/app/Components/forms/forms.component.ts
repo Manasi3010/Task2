@@ -60,7 +60,7 @@ export class FormsComponent implements OnInit {
       ],
     });
     this.data.getState().subscribe((st) => {
-      this.states = st;
+      this.states = st.states;
     });
   }
 
@@ -75,7 +75,7 @@ export class FormsComponent implements OnInit {
     this.route.navigate(['/display']);
   }
   onSelect(val: string) {
-    console.log(val);
+    // console.log(val);
     this.data.getCity(val).subscribe((res: any) => {
       this.city = res;
     });
