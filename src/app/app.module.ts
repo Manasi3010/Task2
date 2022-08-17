@@ -21,6 +21,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { SearchbynamePipe } from './Pipes/searchbyname.pipe';
 import { CommanTableComponent } from './Components/comman-table/comman-table.component';
+import { CustomeComponent } from './ReuseableTable/custome/custome.component';
+import { TableComponent } from './ReuseableTable/table/table.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { CommanTableComponent } from './Components/comman-table/comman-table.com
     DispalyComponent,
     SearchbynamePipe,
     CommanTableComponent,
+    CustomeComponent,
+    TableComponent,
   ],
   imports: [
     BrowserModule,
